@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+
+/* Basic reset without @tailwind directives as requested */
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #e5e7eb;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+  -moz-tab-size: 4;
+  tab-size: 4;
+  font-family: 'Inter', sans-serif;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+}
+
+body {
+  margin: 0;
+  line-height: inherit;
+  background-color: #f9fafb;
+}
+
+/* Ambient Background Blobs */
+.bg-ambient {
+  background-color: #f6f8fb;
+  background-image: 
+    radial-gradient(at 0% 0%, hsla(145, 100%, 85%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, hsla(210, 100%, 85%, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, hsla(330, 100%, 85%, 0.3) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, hsla(50, 100%, 85%, 0.4) 0px, transparent 50%);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #e5e7eb;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #d1d5db;
+}
+
+/* Chart Tooltip overrides */
+.recharts-default-tooltip {
+  border-radius: 12px !important;
+  border: 1px solid rgba(0,0,0,0.05) !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+  padding: 8px 12px !important;
+}
+
+/* Target the bars */
+.performance-bar path {
+  transition: fill 1s ease, stroke 0.3s ease, filter 0.3s ease;
+  cursor: pointer;
+}
+
+/* Define the hover state */
+.performance-bar path:hover {
+  fill: #c5f82a !important; /* The lime green */
+  stroke: #89b01d;
+  stroke-width: 1;
+}
