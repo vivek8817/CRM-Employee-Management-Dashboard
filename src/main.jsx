@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { ThemeProvider } from './context/ThemeContext.jsx';
 // Redux imports
 import { Provider } from 'react-redux';
-import { store } from './store/index.js';
+import { store } from './Store/index.js';
 
 
 createRoot(document.getElementById('root')).render(
