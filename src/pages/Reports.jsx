@@ -48,46 +48,46 @@ export default function Reports() {
       {/* Page Header & Filters */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mt-2">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Analytics & Performance</h1>
-          <p className="text-sm text-gray-500 mt-1">Deep dive into workforce metrics and trends.</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-text-main">Analytics & Performance</h1>
+          <p className="text-sm text-text-muted mt-1">Deep dive into workforce metrics and trends.</p>
         </div>
         
         <div className="flex flex-wrap items-center gap-3">
           {/* Department Filter */}
           <div className="relative shrink-0">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <iconify-icon icon="solar:buildings-2-linear" class="text-gray-400 text-lg"></iconify-icon>
+              <iconify-icon icon="solar:buildings-2-linear" class="text-text-muted text-lg"></iconify-icon>
             </div>
             <select 
-              className="appearance-none bg-white border border-gray-100 text-gray-700 text-sm font-medium rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 cursor-pointer hover:border-gray-200 hover:shadow-sm transition-all"
+              className="appearance-none bg-surface border border-surface text-text-main text-sm font-medium rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand/50 cursor-pointer hover:border-surface hover:shadow-sm transition-all"
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
             >
               {DEPARTMENTS.map(dept => <option key={dept} value={dept}>{dept}</option>)}
             </select>
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-gray-400"></iconify-icon>
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-text-muted"></iconify-icon>
             </div>
           </div>
 
           {/* Date Range Filter */}
           <div className="relative shrink-0">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <iconify-icon icon="solar:calendar-date-linear" class="text-gray-400 text-lg"></iconify-icon>
+              <iconify-icon icon="solar:calendar-date-linear" class="text-text-muted text-lg"></iconify-icon>
             </div>
             <select 
-              className="appearance-none bg-white border border-gray-100 text-gray-700 text-sm font-medium rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 cursor-pointer hover:border-gray-200 hover:shadow-sm transition-all"
+              className="appearance-none bg-surface border border-surface text-text-main text-sm font-medium rounded-xl pl-10 pr-10 py-2.5 focus:outline-none focus:ring-2 focus:ring-brand/50 cursor-pointer hover:border-surface hover:shadow-sm transition-all"
               value={dateRange}
               onChange={(e) => setDateRange(e.target.value)}
             >
               {DATE_RANGES.map(range => <option key={range} value={range}>{range}</option>)}
             </select>
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-gray-400"></iconify-icon>
+              <iconify-icon icon="solar:alt-arrow-down-linear" class="text-text-muted"></iconify-icon>
             </div>
           </div>
 
-          <button className="flex items-center gap-2 bg-[#111] text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-gray-800 hover:shadow-md transition-all active:scale-95">
+          <button className="flex items-center gap-2 bg-brand-dark text-surface px-4 py-2.5 rounded-xl text-sm font-medium hover:opacity-90 hover:shadow-md transition-all active:scale-95">
             <iconify-icon icon="solar:printer-linear" class="text-lg"></iconify-icon>
             Export
           </button>
@@ -98,24 +98,24 @@ export default function Reports() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         
         {/* Attendance Trend (Line Chart) */}
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-gray-100 lg:col-span-2 flex flex-col min-h-[360px]">
+        <div className="bg-surface rounded-[1.5rem] p-6 shadow-sm border border-surface lg:col-span-2 flex flex-col min-h-[360px]">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 className="text-lg font-semibold tracking-tight text-gray-900">Attendance Trend</h2>
-              <p className="text-xs text-gray-500 mt-1">Daily physical vs remote presence</p>
+              <h2 className="text-lg font-semibold tracking-tight text-text-main">Attendance Trend</h2>
+              <p className="text-xs text-text-muted mt-1">Daily physical vs remote presence</p>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#111]"></div>
-                <span className="text-xs text-gray-600 font-medium">Present</span>
+                <div className="w-2 h-2 rounded-full bg-brand-dark"></div>
+                <span className="text-xs text-text-muted font-medium">Present</span>
               </div>
               <div className="flex items-center gap-1.5">
-                <div className="w-2 h-2 rounded-full bg-[#c5f82a]"></div>
-                <span className="text-xs text-gray-600 font-medium">Remote</span>
+                <div className="w-2 h-2 rounded-full bg-brand"></div>
+                <span className="text-xs text-text-muted font-medium">Remote</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-                <span className="text-xs text-gray-600 font-medium">On Leave</span>
+                <span className="text-xs text-text-muted font-medium">On Leave</span>
               </div>
             </div>
           </div>
@@ -172,11 +172,11 @@ export default function Reports() {
         </div>
 
         {/* Role Distribution (Pie Chart) */}
-        <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-gray-100 flex flex-col min-h-[360px]">
+        <div className="bg-surface rounded-[1.5rem] p-6 shadow-sm border border-surface flex flex-col min-h-[360px]">
           <div className="flex items-center justify-between mb-2">
             <div>
-              <h2 className="text-lg font-semibold tracking-tight text-gray-900">Role Distribution</h2>
-              <p className="text-xs text-gray-500 mt-1">Breakdown by job function</p>
+              <h2 className="text-lg font-semibold tracking-tight text-text-main">Role Distribution</h2>
+              <p className="text-xs text-text-muted mt-1">Breakdown by job function</p>
             </div>
           </div>
 
@@ -203,8 +203,8 @@ export default function Reports() {
                 </PieChart>
               </ResponsiveContainer>
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                <span className="text-2xl font-bold text-gray-900">1.2k</span>
-                <span className="text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">Total</span>
+                <span className="text-2xl font-bold text-text-main">1.2k</span>
+                <span className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">Total</span>
               </div>
             </div>
 
@@ -214,9 +214,9 @@ export default function Reports() {
                 <div key={index} className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: COLORS[index % COLORS.length] }}></div>
-                    <span className="text-xs text-gray-600 truncate">{entry.name}</span>
+                    <span className="text-xs text-text-muted truncate">{entry.name}</span>
                   </div>
-                  <span className="text-xs font-semibold text-gray-900 ml-2">{entry.value}</span>
+                  <span className="text-xs font-semibold text-text-main ml-2">{entry.value}</span>
                 </div>
               ))}
             </div>
@@ -226,13 +226,13 @@ export default function Reports() {
       </div>
 
       {/* Bottom Row: Bar Chart */}
-      <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-gray-100 flex flex-col min-h-[380px]">
+      <div className="bg-surface rounded-[1.5rem] p-6 shadow-sm border border-surface flex flex-col min-h-[380px]">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-lg font-semibold tracking-tight text-gray-900">Performance by Department</h2>
-            <p className="text-xs text-gray-500 mt-1">Average evaluation scores across the organization</p>
+            <h2 className="text-lg font-semibold tracking-tight text-text-main">Performance by Department</h2>
+            <p className="text-xs text-text-muted mt-1">Average evaluation scores across the organization</p>
           </div>
-          <div className="bg-gray-50 border border-gray-100 px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 text-gray-700">
+          <div className="bg-surface border border-surface px-4 py-2 rounded-xl text-sm font-medium flex items-center gap-2 text-text-main">
             <iconify-icon icon="solar:target-linear" class="text-lg text-[#89b01d]"></iconify-icon>
             Target Score: 85+
           </div>

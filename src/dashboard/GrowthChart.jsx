@@ -13,13 +13,13 @@ const data = [
 
 const GrowthChart = () => {
   return (
-    <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-gray-100 flex-1 flex flex-col">
+    <div className="bg-surface rounded-[1.5rem] p-6 shadow-sm border border-surface/50 flex-1 flex flex-col">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-gray-900">Employee Growth</h2>
-          <p className="text-xs text-gray-500 mt-1">Headcount over the last 6 months</p>
+          <h2 className="text-lg font-semibold tracking-tight text-text-main">Employee Growth</h2>
+          <p className="text-xs text-text-muted mt-1">Headcount over the last 6 months</p>
         </div>
-        <div className="bg-[#c5f82a]/20 text-[#6a8717] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+        <div className="bg-brand/20 text-[#6a8717] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
           <iconify-icon icon="solar:graph-up-linear"></iconify-icon>
           +18.8%
         </div>

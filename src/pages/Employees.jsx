@@ -1,162 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
+// import { useOutletContext } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
-// MOCK EMPLOYEES DATA
-const MOCK_EMPLOYEES = [
-  {
-    id: 1,
-    empId: "EMP-001",
-    name: "Sarah Jenkins",
-    email: "sarah.j@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&q=80",
-    department: "HR & Admin",
-    role: "HR Director",
-    status: "Active",
-  },
-  {
-    id: 2,
-    empId: "EMP-042",
-    name: "Phoenix Baker",
-    email: "phoenix.b@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100&h=100&fit=crop&q=80",
-    department: "Engineering",
-    role: "Frontend Developer",
-    status: "Active",
-  },
-  {
-    id: 3,
-    empId: "EMP-089",
-    name: "Lana Steiner",
-    email: "lana.s@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&q=80",
-    department: "Product",
-    role: "Product Manager",
-    status: "On Leave",
-  },
-  {
-    id: 4,
-    empId: "EMP-103",
-    name: "Demi Wilkinson",
-    email: "demi.w@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&h=100&fit=crop&q=80",
-    department: "Engineering",
-    role: "Backend Developer",
-    status: "Active",
-  },
-  {
-    id: 5,
-    empId: "EMP-112",
-    name: "Natali Craig",
-    email: "natali.c@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&q=80",
-    department: "Sales",
-    role: "Sales Representative",
-    status: "Inactive",
-  },
-  {
-    id: 6,
-    empId: "EMP-115",
-    name: "Orlando Diggs",
-    email: "orlando.d@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=100&h=100&fit=crop&q=80",
-    department: "Design",
-    role: "UX Designer",
-    status: "Active",
-  },
-  {
-    id: 7,
-    empId: "EMP-128",
-    name: "Andi Lane",
-    email: "andi.l@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=100&h=100&fit=crop&q=80",
-    department: "Engineering",
-    role: "DevOps Engineer",
-    status: "Active",
-  },
-  {
-    id: 8,
-    empId: "EMP-145",
-    name: "Drew Cano",
-    email: "drew.c@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&q=80",
-    department: "Marketing",
-    role: "Content Strategist",
-    status: "On Leave",
-  },
-  {
-    id: 9,
-    empId: "EMP-156",
-    name: "Kate Morrison",
-    email: "kate.m@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1550525811-e5869dd03032?w=100&h=100&fit=crop&q=80",
-    department: "Sales",
-    role: "Account Executive",
-    status: "Active",
-  },
-  {
-    id: 10,
-    empId: "EMP-162",
-    name: "Koray Okumus",
-    email: "koray.o@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&q=80",
-    department: "Engineering",
-    role: "Engineering Manager",
-    status: "Active",
-  },
-  {
-    id: 11,
-    empId: "EMP-174",
-    name: "Zahir Mays",
-    email: "zahir.m@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&q=80",
-    department: "Design",
-    role: "Art Director",
-    status: "Inactive",
-  },
-  {
-    id: 12,
-    empId: "EMP-188",
-    name: "Olivia Rhye",
-    email: "olivia.r@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&q=80",
-    department: "Design",
-    role: "Product Designer",
-    status: "Active",
-  },
-  {
-    id: 13,
-    empId: "EMP-192",
-    name: "Alec Whitten",
-    email: "alec.w@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=100&h=100&fit=crop&q=80",
-    department: "Engineering",
-    role: "Full Stack Developer",
-    status: "Active",
-  },
-  {
-    id: 14,
-    empId: "EMP-201",
-    name: "Rene Wells",
-    email: "rene.w@nexushr.com",
-    avatar:
-      "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=100&h=100&fit=crop&q=80",
-    department: "HR & Admin",
-    role: "Recruiter",
-    status: "Active",
-  },
-];
+
 // DEPARTMENTS
 const DEPARTMENTS = [
   "All",
@@ -174,9 +20,9 @@ const STATUSES = ["All", "Active", "On Leave", "Inactive"];
 
 const StatusBadge = ({ status }) => {
   const styles = {
-    Active: "bg-[#c5f82a]/20 text-[#6a8717] border-[#c5f82a]/50",
+    Active: "bg-brand/20 text-[#6a8717] border-brand/50",
     "On Leave": "bg-amber-100 text-amber-700 border-amber-200",
-    Inactive: "bg-gray-100 text-gray-600 border-gray-200",
+    Inactive: "bg-gray-100 text-text-muted border-surface",
   };
 
   return (
@@ -193,7 +39,7 @@ const StatusBadge = ({ status }) => {
 
 // SKELETON ROW COMPONENT FOR LOADING STATE
 const SkeletonRow = () => (
-  <tr className="border-b border-gray-50">
+  <tr className="border-b border-surface">
     <td className="py-4 px-6">
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-full bg-gray-200 animate-pulse"></div>
@@ -222,13 +68,16 @@ const SkeletonRow = () => (
 );
 
 const Employees = () => {
-  const [data, setData] = useState([]);
+  const data = useSelector((state) => state.employees.list);
+  
+  //  const { newEmployee, clearNewEmployee } = useOutletContext(); 
 
   const [isLoading, setIsLoading] = useState(false);
   const [hasError, setHasError] = useState(false);
 
   // Filters
-  const [searchQuery, setSearchQuery] = useState("");
+   const [searchQuery, setSearchQuery] = useState("");
+  
   const [departmentFilter, setDepartmentFilter] = useState("All");
   const [statusFilter, setStatusFilter] = useState("All");
 
@@ -236,15 +85,37 @@ const Employees = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  // Simulate Data Fetch
-  useEffect(() => {
-    setIsLoading(true);
-    const timer = setTimeout(() => {
-      setData(MOCK_EMPLOYEES);
-      setIsLoading(false);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
+  // // Simulate Data Fetch
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   const timer = setTimeout(() => {
+  //     const storedEmployees = localStorage.getItem("employees");
+  //     if (storedEmployees) {
+  //       setData(JSON.parse(storedEmployees));
+  //     } else {
+  //       setData(MOCK_EMPLOYEES);
+  //       localStorage.setItem("employees", JSON.stringify(MOCK_EMPLOYEES));
+  //     }
+  //     setIsLoading(false);
+  //   }, 1200);
+  //   return () => clearTimeout(timer);
+  // }, []);
+
+  // // Listen for new employees from the AppLayout modal
+  // useEffect(() => {
+  //   if (newEmployee) {
+  //     // Add the new employee to the beginning of the array
+  //     setData(prevData => {
+  //       const newData = [newEmployee, ...prevData];
+  //       localStorage.setItem("employees", JSON.stringify(newData));
+  //       return newData;
+  //     });
+      
+  //     // Clear it from the context so it doesn't add again on re-renders
+  //     clearNewEmployee(); 
+  //   }
+  // }, [newEmployee, clearNewEmployee]);
+
 
   const filteredData = useMemo(() => {
     return data.filter((emp) => {
@@ -279,19 +150,19 @@ const Employees = () => {
       {/* Page Header */}
       <div className="flex items-end justify-between mt-2">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">
+          <h1 className="text-3xl font-semibold tracking-tight text-text-main">
             Directory
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
+          <p className="text-sm text-text-muted mt-1">
             Manage your team members, roles, and statuses.
           </p>
         </div>
 
         <div className="flex items-center gap-3">
-          <button className="text-xs text-gray-400 hover:text-red-500 underline transition-colors">
+          <button className="text-xs text-text-muted hover:text-red-500 underline transition-colors">
             Toggle Error State
           </button>
-          <button className="flex items-center gap-2 bg-[#111] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 hover:shadow-lg transition-all active:scale-95">
+          <button className="flex items-center gap-2 bg-brand-dark text-surface px-5 py-2.5 rounded-full text-sm font-medium hover:opacity-90 hover:shadow-lg transition-all active:scale-95">
             <iconify-icon
               icon="solar:user-plus-bold"
               class="text-lg"
@@ -302,18 +173,18 @@ const Employees = () => {
       </div>
 
       {/* Controls Bar */}
-      <div className="bg-white p-3 rounded-[1.25rem] border border-gray-100 shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center z-20 relative">
+      <div className="bg-surface p-3 rounded-[1.25rem] border border-surface shadow-sm flex flex-col md:flex-row gap-4 justify-between items-center z-20 relative">
         {/* Search */}
         <div className="relative w-full md:max-w-sm">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
             <iconify-icon
               icon="solar:magnifer-linear"
-              class="text-gray-400 text-lg"
+              class="text-text-muted text-lg"
             ></iconify-icon>
           </div>
           <input
             type="text"
-            className="block w-full pl-10 pr-4 py-2 bg-gray-50 border-none rounded-xl text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 transition-all"
+            className="block w-full pl-10 pr-4 py-2 bg-surface border-none rounded-xl text-sm placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all"
             placeholder="Search name, ID, or email..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -328,11 +199,11 @@ const Employees = () => {
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <iconify-icon
                 icon="solar:buildings-2-linear"
-                class="text-gray-400"
+                class="text-text-muted"
               ></iconify-icon>
             </div>
             <select
-              className="appearance-none bg-white border border-gray-100 text-gray-700 text-sm rounded-xl pl-9 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 cursor-pointer hover:border-gray-200 transition-colors"
+              className="appearance-none bg-surface border border-surface text-text-main text-sm rounded-xl pl-9 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-brand/50 cursor-pointer hover:border-surface transition-colors"
               value={departmentFilter}
               onChange={(e) => setDepartmentFilter(e.target.value)}
             >
@@ -345,7 +216,7 @@ const Employees = () => {
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <iconify-icon
                 icon="solar:alt-arrow-down-linear"
-                class="text-gray-400"
+                class="text-text-muted"
               ></iconify-icon>
             </div>
           </div>
@@ -354,11 +225,11 @@ const Employees = () => {
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <iconify-icon
                 icon="solar:shield-check-linear"
-                class="text-gray-400"
+                class="text-text-muted"
               ></iconify-icon>
             </div>
             <select
-              className="appearance-none bg-white border border-gray-100 text-gray-700 text-sm rounded-xl pl-9 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 cursor-pointer hover:border-gray-200 transition-colors"
+              className="appearance-none bg-surface border border-surface text-text-main text-sm rounded-xl pl-9 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-brand/50 cursor-pointer hover:border-surface transition-colors"
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
             >
@@ -371,7 +242,7 @@ const Employees = () => {
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
               <iconify-icon
                 icon="solar:alt-arrow-down-linear"
-                class="text-gray-400"
+                class="text-text-muted"
               ></iconify-icon>
             </div>
           </div>
@@ -379,27 +250,27 @@ const Employees = () => {
       </div>
 
       {/*Main Employees Table */}
-      <div className="flex-1 bg-white border border-gray-100 rounded-[1.5rem] shadow-sm flex flex-col overflow-hidden relative">
+      <div className="flex-1 bg-surface border border-surface rounded-[1.5rem] shadow-sm flex flex-col overflow-hidden relative">
         <div className="flex-1 over overflow-auto">
           <table className="w-full text-left border-collapse whitespace-nowrap min-w-200">
-            <thead className="sticky top-0 bg-white/90 backdrop-blur-md z-10 shadow-[0_1px_0_rgba(0,0,0,0.05)]">
+            <thead className="sticky top-0 bg-surface/90 backdrop-blur-md z-10 shadow-[0_1px_0_rgba(0,0,0,0.05)]">
               <tr>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                   Employee
                 </th>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                   Emp ID
                 </th>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                   Department
                 </th>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                   Role
                 </th>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                   Status
                 </th>
-                <th className="py-4 px-6 text-[11px] font-semibold text-gray-400 uppercase tracking-wider text-right">
+                <th className="py-4 px-6 text-[11px] font-semibold text-text-muted uppercase tracking-wider text-right">
                   Actions
                 </th>
               </tr>
@@ -429,10 +300,10 @@ const Employees = () => {
                           class="text-4xl text-red-500"
                         ></iconify-icon>
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      <h3 className="text-lg font-semibold text-text-main mb-1">
                         Failed to load directory
                       </h3>
-                      <p className="text-sm text-gray-500 mb-6 whitespace-normal">
+                      <p className="text-sm text-text-muted mb-6 whitespace-normal">
                         There was a problem connecting to the server. Please try
                         again.
                       </p>
@@ -442,7 +313,7 @@ const Employees = () => {
                           setIsLoading(true);
                           setTimeout(() => setIsLoading(false), 1000);
                         }}
-                        className="bg-white border border-gray-200 text-gray-700 px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-50 transition-colors shadow-sm"
+                        className="bg-surface border border-surface text-text-main px-5 py-2 rounded-full text-sm font-medium hover:bg-surface transition-colors shadow-sm"
                       >
                         Try Again
                       </button>
@@ -456,16 +327,16 @@ const Employees = () => {
                 <tr>
                   <td colSpan="6" className="py-20 text-center">
                     <div className="flex flex-col items-center justify-center max-w-sm mx-auto">
-                      <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                      <div className="w-16 h-16 bg-surface rounded-full flex items-center justify-center mb-4">
                         <iconify-icon
                           icon="solar:users-group-rounded-bold-duotone"
-                          class="text-4xl text-gray-400"
+                          class="text-4xl text-text-muted"
                         ></iconify-icon>
                       </div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                      <h3 className="text-lg font-semibold text-text-main mb-1">
                         No employees found
                       </h3>
-                      <p className="text-sm text-gray-500 mb-6 whitespace-normal">
+                      <p className="text-sm text-text-muted mb-6 whitespace-normal">
                         Try adjusting your search or filters to see more
                         results.
                       </p>
@@ -481,35 +352,35 @@ const Employees = () => {
                 paginatedData.map((emp) => (
                   <tr
                     key={emp.id}
-                    className="group border-b border-gray-50 last:border-none hover:bg-[#fafafa] transition-colors cursor-default"
+                    className="group border-b border-surface last:border-none hover:bg-[#fafafa] transition-colors cursor-default"
                   >
                     <td className="py-3 px-6">
                       <div className="flex items-center gap-3">
                         <img
-                          src={emp.avatar}
+                          src={emp.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(emp.name)}&background=random`}
                           alt={emp.name}
                           className="w-9 h-9 rounded-full object-cover shadow-sm ring-1 ring-white"
                         />
                         <div>
-                          <div className="text-sm font-semibold text-gray-900">
+                          <div className="text-sm font-semibold text-text-main">
                             {emp.name}
                           </div>
-                          <div className="text-xs text-gray-500">
+                          <div className="text-xs text-text-muted">
                             {emp.email}
                           </div>
                         </div>
                       </div>
                     </td>
 
-                    <td className="py-3 px-6 text-sm text-gray-500 font-medium">
+                    <td className="py-3 px-6 text-sm text-text-muted font-medium">
                       {emp.empId}
                     </td>
                     <td className="py-3 px-6">
-                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-gray-600 border border-gray-100">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium bg-gray-50 text-text-muted border border-surface">
                         {emp.department}
                       </span>
                     </td>
-                    <td className="py-3 px-6 text-sm text-gray-700">
+                    <td className="py-3 px-6 text-sm text-text-main">
                       {emp.role}
                     </td>
                     <td className="py-3 px-6">
@@ -518,7 +389,7 @@ const Employees = () => {
                     <td className="py-3 px-6 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-50 group-hover:opacity-100 transition-opacity">
                         <button
-                          className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm transition-all focus:opacity-100"
+                          className="w-8 h-8 rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted hover:text-text-main hover:border-surface hover:shadow-sm transition-all focus:opacity-100"
                           aria-label="View Details"
                         >
                           <iconify-icon
@@ -527,7 +398,7 @@ const Employees = () => {
                           ></iconify-icon>
                         </button>
                         <button
-                          className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#89b01d] hover:border-[#c5f82a]/50 hover:bg-[#c5f82a]/10 hover:shadow-sm transition-all focus:opacity-100"
+                          className="w-8 h-8 rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted hover:text-[#89b01d] hover:border-brand/50 hover:bg-brand/10 hover:shadow-sm transition-all focus:opacity-100"
                           aria-label="Edit Employee"
                         >
                           <iconify-icon
@@ -545,18 +416,18 @@ const Employees = () => {
 
         {/* Pagination Footer */}
         {!hasError && filteredData.length > 0 && (
-          <div className="border-t border-gray-100 bg-gray-50/50 px-6 py-4 flex items-center justify-between z-10">
-            <span className="text-sm text-gray-500">
+          <div className="border-t border-surface bg-gray-50/50 px-6 py-4 flex items-center justify-between z-10">
+            <span className="text-sm text-text-muted">
               Showing{" "}
-              <span className="font-semibold text-gray-900">
+              <span className="font-semibold text-text-main">
                 {(currentPage - 1) * itemsPerPage + 1}
               </span>{" "}
               to
-              <span className="font-semibold text-gray-900">
+              <span className="font-semibold text-text-main">
                 {Math.min(currentPage * itemsPerPage, filteredData.length)}
               </span>{" "}
               of
-              <span className="font-semibold text-gray-900">
+              <span className="font-semibold text-text-main">
                 {filteredData.length}
               </span>{" "}
               results
@@ -564,8 +435,8 @@ const Employees = () => {
 
             <div className="flex items-center gap-2">
               <button
-                className={`w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 
-    ${currentPage === 1 || isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50 hover:shadow-sm transition-all"}`}
+                className={`w-8 h-8 rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted 
+    ${currentPage === 1 || isLoading ? "opacity-50 cursor-not-allowed" : "hover:bg-mainDash hover:shadow-sm transition-all"}`}
                 onClick={() => {
                   setCurrentPage((p) => Math.max(p - 1, 1));
                 }}
@@ -583,7 +454,7 @@ const Employees = () => {
                 disabled={
                   currentPage === totalPages || isLoading || totalPages === 0
                 }
-                className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-50 hover:shadow-sm transition-all"
+                className="w-8 h-8 rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted hover:bg-gray-50 hover:shadow-sm transition-all"
               >
                 <iconify-icon
                   icon="solar:alt-arrow-right-linear"

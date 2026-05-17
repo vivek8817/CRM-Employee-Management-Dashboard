@@ -54,34 +54,34 @@ const employees = [
 const LatestEmployees = () => {
 
   return (
-    <div className="bg-white rounded-[1.5rem] p-6 shadow-sm border border-gray-100 h-full flex flex-col">
+    <div className="bg-surface rounded-[1.5rem] p-6 shadow-sm border border-surface h-full flex flex-col">
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h2 className="text-lg font-semibold tracking-tight text-gray-900">Latest Employees</h2>
-          <p className="text-xs text-gray-500 mt-1">Recently onboarded team members</p>
+          <h2 className="text-lg font-semibold tracking-tight text-text-main">Latest Employees</h2>
+          <p className="text-xs text-text-muted mt-1">Recently onboarded team members</p>
         </div>
-        <button className="text-xs font-medium text-gray-900 bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-full transition-colors">
+        <button className="text-xs font-medium text-text-muted hover:bg-text-main px-3 py-1.5 rounded-full transition-colors">
           View All
         </button>
       </div>
 
       <div className="flex-1 flex flex-col gap-4 overflow-y-auto pr-2">
         {employees.map((employee) => (
-          <div key={employee.id} className="flex items-center gap-3 p-2 -mx-2 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer group">
+          <div key={employee.id} className="flex items-center gap-3 p-2 -mx-2 rounded-xl transition-colors cursor-pointer group">
             <img 
               src={employee.avatar} 
               alt={employee.name} 
-              className="w-10 h-10 rounded-full object-cover shadow-sm"
+              className="w-icon h-icon rounded-full object-cover shadow-sm"
             />
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-medium text-gray-900 truncate">{employee.name}</h4>
-              <p className="text-xs text-gray-500 truncate">{employee.role}</p>
+              <h4 className="text-sm font-medium text-text-main truncate">{employee.name}</h4>
+              <p className="text-xs text-text-muted truncate">{employee.role}</p>
             </div>
             <div className="text-right flex flex-col items-end">
-              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-600 mb-1">
+              <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-500 text-text-main mb-1">
                 {employee.department}
               </span>
-              <span className="text-[11px] text-gray-400">{employee.date}</span>
+              <span className="text-[11px] text-text-muted">{employee.date}</span>
             </div>
           </div>
         ))}

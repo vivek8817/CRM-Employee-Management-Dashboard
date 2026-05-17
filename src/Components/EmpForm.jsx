@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import { clsx } from 'clsx';
+// EmpForm.jsx me upar import karein
+import { useDispatch } from 'react-redux';
+import { addEmployee } from '../Store/EmployeeSlice';
+
+
+
 
 const defaultFormState = {
   firstName: '',
@@ -15,10 +21,47 @@ const defaultFormState = {
   status: 'Active'
 };
 
+const InputField = ({ label, name, type = 'text', placeholder, icon, required, value, onChange, error }) => (
+  <div className="flex flex-col gap-2">
+    <label htmlFor={name} className="text-sm font-semibold uppercase tracking-wider text-text-muted flex items-center justify-between">
+      {label} {required && <span className="text-brand ml-1" aria-hidden="true">*</span>}
+    </label>
+    <div className="relative">
+      {icon && (
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none flex items-center">
+          <iconify-icon icon={icon} width="20"></iconify-icon>
+        </div>
+      )}
+      <input
+        id={name}
+        name={name}
+        type={type}
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className={clsx(
+          "w-full bg-surface border border-transparent rounded-xl text-sm text-text-main placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all py-3",
+          icon ? "pl-12 pr-4" : "px-4",
+          error && "border-red-300 focus:ring-red-100"
+        )}
+      />
+    </div>
+    {error && (
+      <span className="text-sm text-red-500 flex items-center gap-1 mt-1 animate-[slideIn_0.2s_ease-out]">
+        <iconify-icon icon="solar:danger-circle-linear"></iconify-icon>
+        {error}
+      </span>
+    )}
+  </div>
+);
+
 export default function EmployeeForm({ onSave, onCancel, initialData }) {
   const [formData, setFormData] = useState(initialData || defaultFormState);
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Redux Dispatch
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,76 +89,52 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (validate()) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        onSave(formData);
-        setIsSubmitting(false);
-      }, 600);
-    }
+    
+    // ✅ Form Data ko combine kar rahe hain Redux ke format ke hisaab se
+    const newEmpData = {
+      ...formData, // Form ki baaki saari fields (email, role, department, etc.) automatically copy ho jayengi
+      id: Date.now(), 
+      empId: `EMP-${Math.floor(Math.random() * 1000)}`,
+      name: `${formData.firstName} ${formData.lastName}`, // First aur Last name jod diya
+      avatar: `https://ui-avatars.com/api/?name=${formData.firstName}+${formData.lastName}&background=random` // Avatar bhi auto-generate kar diya
+    };
+    // ✅ Redux me Data bhej do
+    dispatch(addEmployee(newEmpData));
+    
+    onSave(); // Form close karne ke liye
   };
 
-  const InputField = ({ label, name, type = 'text', placeholder, icon, required }) => (
-    <div className="flex flex-col gap-2">
-      <label htmlFor={name} className="text-sm font-semibold uppercase tracking-wider text-gray-400 flex items-center justify-between">
-        {label} {required && <span className="text-[#c5f82a] ml-1" aria-hidden="true">*</span>}
-      </label>
-      <div className="relative">
-        {icon && (
-          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none flex items-center">
-            <iconify-icon icon={icon} width="20"></iconify-icon>
-          </div>
-        )}
-        <input
-          id={name}
-          name={name}
-          type={type}
-          value={formData[name]}
-          onChange={handleChange}
-          placeholder={placeholder}
-          className={clsx(
-            "w-full bg-gray-50 border border-transparent rounded-xl text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 transition-all py-3",
-            icon ? "pl-12 pr-4" : "px-4",
-            errors[name] && "border-red-300 focus:ring-red-100"
-          )}
-        />
-      </div>
-      {errors[name] && (
-        <span className="text-sm text-red-500 flex items-center gap-1 mt-1 animate-[slideIn_0.2s_ease-out]">
-          <iconify-icon icon="solar:danger-circle-linear"></iconify-icon>
-          {errors[name]}
-        </span>
-      )}
-    </div>
-  );
-
   return (
+
+    
+
+    <>
     <form onSubmit={handleSubmit} className="flex flex-col gap-8">
       
       {/* 1. Personal Info Section */}
       <section>
-        <h3 className="text-base font-semibold text-gray-900 mb-6">Personal Details</h3>
+        <h3 className="text-base font-semibold text-text-main mb-6">Personal Details</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <InputField label="First Name" name="firstName" placeholder="Jane" required />
-          <InputField label="Last Name" name="lastName" placeholder="Doe" required />
-          <InputField label="Email Address" name="email" type="email" placeholder="jane.doe@company.com" icon="solar:letter-linear" required />
-          <InputField label="Phone Number" name="phone" type="tel" placeholder="+1 (555) 000-0000" icon="solar:phone-linear" />
+          <InputField label="First Name" name="firstName" placeholder="Jane" required value={formData.firstName} onChange={handleChange} error={errors.firstName} />
+          <InputField label="Last Name" name="lastName" placeholder="Doe" required value={formData.lastName} onChange={handleChange} error={errors.lastName} />
+          <InputField label="Email Address" name="email" type="email" placeholder="jane.doe@company.com" icon="solar:letter-linear" required value={formData.email} onChange={handleChange} error={errors.email} />
+          <InputField label="Phone Number" name="phone" type="tel" placeholder="+1 (555) 000-0000" icon="solar:phone-linear" value={formData.phone} onChange={handleChange} error={errors.phone} />
         </div>
       </section>
 
       {/* 2. Job Info Section */}
-      <section className="pt-8 border-t border-gray-100">
-        <h3 className="text-base font-semibold text-gray-900 mb-6">Role & Department</h3>
+      <section className="pt-8 border-t border-surface">
+        <h3 className="text-base font-semibold text-text-main mb-6">Role & Department</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="flex flex-col gap-2">
-            <label className="text-sm font-semibold uppercase tracking-wider text-gray-400">Department <span className="text-[#c5f82a] ml-1">*</span></label>
+            <label className="text-sm font-semibold uppercase tracking-wider text-text-muted">Department <span className="text-brand ml-1">*</span></label>
             <div className="relative">
               <select
                 name="department"
                 value={formData.department}
                 onChange={handleChange}
                 className={clsx(
-                  "w-full bg-white border border-gray-100 text-gray-700 text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-[#c5f82a]/50 hover:border-gray-200 transition-colors py-3 px-4 appearance-none",
+                  "w-full bg-surface border border-surface text-text-main text-sm rounded-xl focus:outline-none focus:ring-2 focus:ring-brand/50 hover:border-surface transition-colors py-3 px-4 appearance-none",
                   errors.department && "border-red-300 focus:ring-red-100"
                 )}
               >
@@ -127,27 +146,27 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
                 <option value="Sales">Sales</option>
                 <option value="HR">HR & Operations</option>
               </select>
-              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-text-muted">
                 <iconify-icon icon="solar:alt-arrow-down-linear"></iconify-icon>
               </div>
             </div>
             {errors.department && <span className="text-sm text-red-500 mt-1">{errors.department}</span>}
           </div>
           
-          <InputField label="Manager" name="manager" placeholder="Search manager..." icon="solar:user-rounded-linear" />
-          <InputField label="Start Date" name="startDate" type="date" />
-          <InputField label="Job Title" name="jobTitle" placeholder="e.g. Senior Engineer" required />
+          <InputField label="Manager" name="manager" placeholder="Search manager..." icon="solar:user-rounded-linear" value={formData.manager} onChange={handleChange} error={errors.manager} />
+          <InputField label="Start Date" name="startDate" type="date" value={formData.startDate} onChange={handleChange} error={errors.startDate} />
+          <InputField label="Job Title" name="jobTitle" placeholder="e.g. Senior Engineer" required value={formData.jobTitle} onChange={handleChange} error={errors.jobTitle} />
         </div>
       </section>
 
       {/* 3. Salary / Role Section */}
-      <section className="pt-8 border-t border-gray-100">
-        <h3 className="text-base font-semibold text-gray-900 mb-6">Compensation</h3>
+      <section className="pt-8 border-t border-surface">
+        <h3 className="text-base font-semibold text-text-main mb-6">Compensation</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <InputField label="Annual Salary" name="salary" type="number" placeholder="0.00" icon="solar:dollar-linear" />
+          <InputField label="Annual Salary" name="salary" type="number" placeholder="0.00" icon="solar:dollar-linear" value={formData.salary} onChange={handleChange} error={errors.salary} />
           
           <div className="flex flex-col gap-2 md:col-span-2">
-            <label className="text-sm font-semibold uppercase tracking-wider text-gray-400">Employment Type</label>
+            <label className="text-sm font-semibold uppercase tracking-wider text-text-muted">Employment Type</label>
             <div className="flex flex-wrap gap-4 mt-2">
               {['Full-time', 'Part-time', 'Contractor', 'Intern'].map(type => (
                 <label key={type} className="flex items-center gap-3 cursor-pointer group">
@@ -160,11 +179,11 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
                       onChange={handleChange}
                       className="peer sr-only"
                     />
-                    <div className="w-5 h-5 rounded-full border-2 border-gray-200 peer-checked:border-[#111] peer-checked:bg-[#111] transition-all duration-200 flex items-center justify-center">
-                       {formData.employmentType === type && <div className="w-2 h-2 rounded-full bg-[#c5f82a]"></div>}
+                    <div className="w-5 h-5 rounded-full border-2 border-surface peer-checked:border-brand-dark peer-checked:bg-brand-dark transition-all duration-200 flex items-center justify-center">
+                       {formData.employmentType === type && <div className="w-2 h-2 rounded-full bg-brand"></div>}
                     </div>
                   </div>
-                  <span className="text-sm text-gray-600 group-hover:text-gray-900 font-medium transition-colors">{type}</span>
+                  <span className="text-sm text-text-muted group-hover:text-text-main font-medium transition-colors">{type}</span>
                 </label>
               ))}
             </div>
@@ -173,13 +192,13 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
       </section>
 
       {/* 4. Status Section */}
-      <section className="pt-8 border-t border-gray-100">
-        <h3 className="text-base font-semibold text-gray-900 mb-6">Directory Status</h3>
+      <section className="pt-8 border-t border-surface">
+        <h3 className="text-base font-semibold text-text-main mb-6">Directory Status</h3>
         <div className="flex flex-wrap gap-4">
           {[
-            { value: 'Active', icon: 'solar:check-circle-bold', colorClass: 'peer-checked:bg-[#c5f82a]/20 peer-checked:text-[#6a8717] peer-checked:border-[#c5f82a]/50' },
+            { value: 'Active', icon: 'solar:check-circle-bold', colorClass: 'peer-checked:bg-brand/20 peer-checked:text-[#6a8717] peer-checked:border-brand/50' },
             { value: 'Onboarding', icon: 'solar:clock-circle-bold', colorClass: 'peer-checked:bg-amber-100 peer-checked:text-amber-700 peer-checked:border-amber-200' },
-            { value: 'Inactive', icon: 'solar:close-circle-bold', colorClass: 'peer-checked:bg-gray-100 peer-checked:text-gray-700 peer-checked:border-gray-200' }
+            { value: 'Inactive', icon: 'solar:close-circle-bold', colorClass: 'peer-checked:bg-gray-100 peer-checked:text-text-main peer-checked:border-surface' }
           ].map(status => (
             <label key={status.value} className="relative flex-1 min-w-[140px] cursor-pointer">
               <input
@@ -191,7 +210,7 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
                 className="peer sr-only"
               />
               <div className={clsx(
-                "flex items-center justify-center gap-3 px-6 py-4 rounded-[1.25rem] border border-gray-100 bg-white text-gray-500",
+                "flex items-center justify-center gap-3 px-6 py-4 rounded-[1.25rem] border border-surface bg-surface text-text-muted",
                 "transition-all duration-200 hover:bg-gray-50",
                 status.colorClass
               )}>
@@ -204,30 +223,31 @@ export default function EmployeeForm({ onSave, onCancel, initialData }) {
       </section>
 
       {/* Footer Actions */}
-      <div className="mt-8 pt-8 border-t border-gray-100 flex items-center justify-end gap-4 bg-white z-10">
+      <div className="mt-8 pt-8 border-t border-surface flex items-center justify-end gap-4 bg-surface z-10">
         <button
           type="button"
           onClick={onCancel}
           disabled={isSubmitting}
-          className="bg-white border border-gray-200 text-gray-700 px-6 py-3 rounded-full font-medium hover:bg-gray-50 hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-gray-100 disabled:opacity-50"
+          className="bg-surface border border-surface text-text-main px-6 py-3 rounded-full font-medium hover:bg-mainDash hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-gray-100 disabled:opacity-50"
         >
           Cancel
         </button>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="relative bg-[#111] text-white px-8 py-3 rounded-full font-medium hover:bg-gray-800 hover:shadow-lg transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center overflow-hidden min-w-[160px]"
+          className="relative bg-brand-dark text-surface px-8 py-3 rounded-full font-medium hover:opacity-90 hover:shadow-lg transition-all active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center overflow-hidden min-w-[160px]"
         >
           <span className={clsx("transition-all duration-200 flex items-center gap-2", isSubmitting ? "opacity-0 translate-y-4" : "opacity-100 translate-y-0")}>
             Save Profile
           </span>
           {isSubmitting && (
             <div className="absolute inset-0 flex items-center justify-center">
-              <iconify-icon icon="solar:spinner-line-duotone" width="22" className="animate-spin text-[#c5f82a]"></iconify-icon>
+              <iconify-icon icon="solar:spinner-line-duotone" width="22" className="animate-spin text-brand"></iconify-icon>
             </div>
           )}
         </button>
       </div>
     </form>
+    </>
   );
 }

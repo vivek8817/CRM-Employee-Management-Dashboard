@@ -1,4 +1,6 @@
 import React from 'react'
+import { useSelector } from 'react-redux'
+
 import ActivityFeed from '../dashboard/ActivityFeed'
 import DepartmentChart from '../dashboard/DepartmentChart'
 import GrowthChart from '../dashboard/GrowthChart'
@@ -6,17 +8,27 @@ import KPICard from '../dashboard/KPICard'
 import LatestEmployees from '../dashboard/LatestEmployees'
 
 
+
 const DashBoard = () => {
+
+  // Total employees count nikalne ke liye list ki length use karenge
+  const totalEmployeesCount = useSelector((state) => state.employees.list.length);
+  
+  // Activity feed lene ke liye
+  const activities = useSelector((state) => state.employees.recentActivities);
+
+
+
   return (
     <div className='flex flex-col gap-8 pb-10'>
       
       <div className="flex items-end justify-between mt-2">
         <div>
-          <h1 className="text-3xl font-semibold tracking-tight text-gray-900">Dashboard Overview</h1>
-          <p className="text-sm text-gray-500 mt-1">Quick business snapshot and HR metrics.</p>
+          <h1 className="text-3xl font-semibold tracking-tight text-text-main">Dashboard Overview</h1>
+          <p className="text-sm text-text-muted mt-1">Quick business snapshot and HR metrics.</p>
         </div>
 
-        <button className='flex items-center gap-2 bg-surface border border-gray-100 rounded-full py-4 px-2 text-s font-medium text-gray-600 shadow-sm hover:shadow-md transition-colors'>
+        <button className='flex items-center gap-2 bg-surface border border-surface rounded-full py-4 px-2 text-s font-medium text-text-main shadow-sm hover:shadow-md transition-colors'>
           <iconify-icon icon="solar:calendar-date-linear" class="text-base"></iconify-icon>
           Jan 1 - Jan 31, 2024
           <iconify-icon icon="solar:alt-arrow-down-linear" class="ml-1"></iconify-icon>  
@@ -27,7 +39,7 @@ const DashBoard = () => {
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
          <KPICard 
           title="Total Employees" 
-          value="1,248" 
+          value={totalEmployeesCount} // Ye hamesha latest count dikhayega
           trend="+12%" 
           trendUp={true} 
           subtitle="vs last month"
@@ -35,7 +47,7 @@ const DashBoard = () => {
         />
         <KPICard 
           title="Active Employees" 
-          value="1,180" 
+          value="1,180"
           trend="+8%" 
           trendUp={true} 
           subtitle="vs last month"

@@ -1,29 +1,59 @@
 @import "tailwindcss";
 
-
-/* Basic reset without @tailwind directives as requested */
-*, ::before, ::after {
-  box-sizing: border-box;
-  border-width: 0;
-  border-style: solid;
-  border-color: #e5e7eb;
+@layer base {
+  :root {
+    --theme-brand: #C5F82A;
+    --theme-brand-dark: #111111; 
+    --theme-bg: #F8F9FA;
+    --theme-surface: #FFFFFF;   
+    --theme-mainDash: #F9FAFB;
+    
+    --theme-text: #111111;
+    --theme-text-muted: #6B7280;
+  }
+  
+  .dark {
+    --theme-brand: #C5F82A; 
+    --theme-brand-dark: #FFFFFF; 
+    --theme-bg: #091315; 
+    --theme-surface: #141F22; 
+    --theme-mainDash: #0E181B; 
+    
+    --theme-text: #F9FAFB; 
+    --theme-text-muted: #9CA3AF;
+  }
 }
 
-html {
-  line-height: 1.5;
-  -webkit-text-size-adjust: 100%;
-  -moz-tab-size: 4;
-  tab-size: 4;
-  font-family: 'Inter', sans-serif;
-  font-feature-settings: normal;
-  font-variation-settings: normal;
+/* 3. Tailwind v4 Engine Mapping */
+@theme {
+  /* --- COLORS --- */
+  --color-brand: var(--theme-brand);
+  --color-brand-dark: var(--theme-brand-dark); 
+  --color-background: var(--theme-bg);
+  --color-surface: var(--theme-surface);   
+  --color-mainDash: var(--theme-mainDash);
+  
+  /* --- TEXT --- */
+  --color-text-main: var(--theme-text);
+  --color-text-muted: var(--theme-text-muted);
+
+  /* --- TYPOGRAPHY --- */
+  --font-sans: "Inter", sans-serif;
+
+  /* --- SPACING ENGINE --- */
+  --spacing: 0.25rem;   
+
+  /* --- SEMANTIC LAYOUT SIZES --- */
+  --spacing-sidebar: 280px;  
+  --spacing-header: 80px;    
+  --spacing-icon: 40px;      
+
+  /* --- BORDER RADIUS --- */
+  --radius-xl: 0.75rem;      
+  --radius-full: 9999px;     
 }
 
-body {
-  margin: 0;
-  line-height: inherit;
-  background-color: #f9fafb;
-}
+
 
 /* Ambient Background Blobs */
 .bg-ambient {
@@ -70,7 +100,7 @@ body {
 
 /* Define the hover state */
 .performance-bar path:hover {
-  fill: #c5f82a !important; /* The lime green */
+  fill: var(--color-brand) !important; /* The lime green */
   stroke: #89b01d;
   stroke-width: 1;
 }

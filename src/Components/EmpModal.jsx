@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { clsx } from 'clsx';
-import EmployeeForm from './EmployeeForm';
+import EmployeeForm from './EmpForm';
 
 export default function EmployeeModal({ isOpen, onClose, onSave, initialData = null }) {
   const modalRef = useRef(null);
@@ -50,7 +50,7 @@ export default function EmployeeModal({ isOpen, onClose, onSave, initialData = n
       {/* Backdrop */}
       <div 
         className={clsx(
-          "absolute inset-0 bg-gray-900/60 backdrop-blur-sm transition-opacity duration-300",
+          "absolute inset-0 bg-black/30 backdrop-blur-sm transition-opacity duration-300",
           isVisible ? "opacity-100" : "opacity-0"
         )}
         onClick={handleBackdropClick}
@@ -64,24 +64,24 @@ export default function EmployeeModal({ isOpen, onClose, onSave, initialData = n
         aria-modal="true"
         aria-labelledby="modal-title"
         className={clsx(
-          "relative w-full max-w-2xl bg-white rounded-[1.5rem] shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]",
+          "relative w-full max-w-2xl bg-mainDash rounded-[1.5rem] shadow-2xl flex flex-col max-h-[calc(100vh-2rem)]",
           "transition-all duration-300 ease-out",
           isVisible ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
         )}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-8 py-6 border-b border-gray-100 shrink-0">
+        <div className="flex items-center justify-between px-8 py-6 border-b border-surface shrink-0">
           <div>
-            <h2 id="modal-title" className="text-2xl font-semibold tracking-tight text-gray-900">
+            <h2 id="modal-title" className="text-2xl font-semibold tracking-tight text-text-main">
               {initialData ? 'Edit Employee' : 'Add Employee'}
             </h2>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-text-muted mt-1">
               Provide necessary information for the company directory.
             </p>
           </div>
           <button 
             onClick={onClose}
-            className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:border-gray-300 hover:shadow-sm transition-all"
+            className="w-icon h-icon rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted hover:text-text-main hover:border-surface hover:shadow-sm transition-all"
             aria-label="Close modal"
           >
             <iconify-icon icon="solar:close-circle-linear" width="24"></iconify-icon>

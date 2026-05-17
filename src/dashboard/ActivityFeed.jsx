@@ -19,7 +19,7 @@ const activities = [
     person: 'Emma Watson',
     time: '4 hours ago',
     icon: 'solar:user-plus-bold',
-    statusColor: 'bg-[#c5f82a]/30 text-[#6a8717]',
+    statusColor: 'bg-brand/30 text-[#6a8717]',
     details: 'Assigned to Engineering Dept.'
   },
   {
@@ -38,8 +38,8 @@ const ActivityFeed = () => {
   return (
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between mb-4 px-1">
-        <h2 className="text-lg font-semibold tracking-tight text-gray-900">Recent Activity</h2>
-        <button className="text-gray-400 hover:text-gray-700">
+        <h2 className="text-lg font-semibold tracking-tight text-text-main">Recent Activity</h2>
+        <button className="text-text-muted hover:text-text-main">
           <iconify-icon icon="solar:menu-dots-bold" class="text-xl"></iconify-icon>
         </button>
       </div>
@@ -48,7 +48,7 @@ const ActivityFeed = () => {
         {activities.map((activity) => (
           <div 
             key={activity.id} 
-            className="bg-white rounded-[1.25rem] p-5 shadow-sm border border-gray-100 flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
+            className="bg-surface rounded-[1.25rem] p-5 shadow-sm border border-surface flex flex-col gap-3 hover:shadow-md transition-shadow cursor-pointer relative overflow-hidden"
           >
             {/* Top Row: Pill and Time */}
             <div className="flex justify-between items-center">
@@ -56,22 +56,22 @@ const ActivityFeed = () => {
                 <iconify-icon icon={activity.icon}></iconify-icon>
                 {activity.type}
               </span>
-              <span className="text-[11px] text-gray-400 font-medium">{activity.time}</span>
+              <span className="text-[11px] text-text-muted font-medium">{activity.time}</span>
             </div>
 
             {/* Content Area */}
             <div>
-              <h3 className="text-sm font-semibold text-gray-900 mb-0.5">{activity.title}</h3>
-              <p className="text-xs text-gray-500 mb-2">by {activity.person}</p>
+              <h3 className="text-sm font-semibold text-text-main mb-0.5">{activity.title}</h3>
+              <p className="text-xs text-text-muted mb-2">by {activity.person}</p>
               
-              <div className="bg-gray-50 rounded-lg p-3 border border-gray-100/50">
-                <p className="text-xs text-gray-600 leading-relaxed">{activity.details}</p>
+              <div className="bg-surface rounded-lg p-3 border border-surface/50">
+                <p className="text-xs text-text-muted leading-relaxed">{activity.details}</p>
               </div>
             </div>
           </div>
         ))}
         
-        <button className="mt-2 text-xs font-medium text-gray-500 hover:text-gray-900 flex items-center justify-center gap-1 py-2">
+        <button className="mt-2 text-xs font-medium text-text-muted hover:text-text-main flex items-center justify-center gap-1 py-2">
           View Activity Log
           <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
         </button>

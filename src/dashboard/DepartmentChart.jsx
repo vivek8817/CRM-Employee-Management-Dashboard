@@ -15,10 +15,10 @@ const COLORS = ['#111111', '#c5f82a', '#e5e7eb', '#9ca3af', '#4b5563'];
 
 const DepartmentChart = () => {
   return (
-    <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col h-[280px]">
+    <div className="bg-surface rounded-3xl p-6 shadow-sm border border-surface/50 flex flex-col h-[280px]">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold tracking-tight text-gray-900">Dept. Distribution</h2>
-        <button className="text-gray-400 hover:text-gray-700">
+        <h2 className="text-lg font-semibold tracking-tight text-text-main">Dept. Distribution</h2>
+        <button className="text-text-muted hover:text-text-main">
           <iconify-icon icon="solar:menu-dots-bold" class="text-xl"></iconify-icon>
         </button>
       </div>
@@ -46,23 +46,23 @@ const DepartmentChart = () => {
             </PieChart>
           </ResponsiveContainer>
           <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-            <span className="text-xl font-semibold text-gray-900">5</span>
-            <span className="text-[10px] text-gray-500 uppercase tracking-wider mt-0.5">Depts</span>
+            <span className="text-xl font-semibold text-text-main">5</span>
+            <span className="text-[10px] text-text-muted uppercase tracking-wider mt-0.5">Depts</span>
           </div>
         </div>
         
         {/* Custom Legend */}
-        <div className="w-1/2 flex flex-col gap-3 pl-4 border-l border-gray-50">
+        <div className="w-1/2 flex flex-col gap-3 pl-4 border-l border-surface">
           {data.slice(0, 4).map((entry, index) => (
             <div key={index} className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: COLORS[index] }}></div>
-                <span className="text-xs text-gray-600 truncate max-w-[80px]">{entry.name}</span>
+                <span className="text-xs text-text-main truncate max-w-[80px]">{entry.name}</span>
               </div>
-              <span className="text-xs font-medium text-gray-900">{entry.value}</span>
+              <span className="text-xs font-medium text-text-main">{entry.value}</span>
             </div>
           ))}
-          <div className="text-[10px] text-gray-400 mt-1 cursor-pointer hover:text-gray-600">
+          <div className="text-[10px] text-text-muted mt-1 cursor-pointer hover:text-text-main">
             +1 more department
           </div>
         </div>

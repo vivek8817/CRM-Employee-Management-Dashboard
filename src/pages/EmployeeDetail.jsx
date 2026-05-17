@@ -42,9 +42,9 @@ const MOCK_EMPLOYEE = {
 
 const StatusBadge = ({ status }) => {
   const styles = {
-    'Active': 'bg-[#c5f82a]/20 text-[#6a8717] border-[#c5f82a]/50',
+    'Active': 'bg-brand/20 text-[#6a8717] border-brand/50',
     'On Leave': 'bg-amber-100 text-amber-700 border-amber-200',
-    'Inactive': 'bg-gray-100 text-gray-600 border-gray-200',
+    'Inactive': 'bg-gray-100 text-text-muted border-surface',
   };
 
   return (
@@ -57,12 +57,12 @@ const StatusBadge = ({ status }) => {
 
 const ContactRow = ({ icon, label, value }) => (
   <div className="flex items-center gap-3 py-2">
-    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-500 shrink-0">
+    <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-text-muted shrink-0">
       <iconify-icon icon={icon} class="text-lg"></iconify-icon>
     </div>
     <div className="flex-1 min-w-0">
-      <p className="text-[10px] uppercase tracking-wider text-gray-400 font-semibold mb-0.5">{label}</p>
-      <p className="text-sm font-medium text-gray-900 truncate">{value}</p>
+      <p className="text-[10px] uppercase tracking-wider text-text-muted font-semibold mb-0.5">{label}</p>
+      <p className="text-sm font-medium text-text-main truncate">{value}</p>
     </div>
   </div>
 );
@@ -80,22 +80,22 @@ export default function EmployeeDetail() {
       <div className="flex items-center justify-between mt-2">
         <div className="flex items-center gap-4">
           <button 
-            className="w-10 h-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-gray-500 hover:text-gray-900 hover:shadow-sm hover:border-gray-300 transition-all"
+            className="w-icon h-icon rounded-full bg-surface border border-surface flex items-center justify-center text-text-muted hover:text-text-main hover:shadow-sm hover:border-surface transition-all"
           >
             <iconify-icon icon="solar:arrow-left-linear" class="text-xl"></iconify-icon>
           </button>
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-gray-900">Employee Profile</h1>
-            <p className="text-sm text-gray-500 mt-1">Detailed information and performance metrics.</p>
+            <h1 className="text-2xl font-semibold tracking-tight text-text-main">Employee Profile</h1>
+            <p className="text-sm text-text-muted mt-1">Detailed information and performance metrics.</p>
           </div>
         </div>
         
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-4 py-2.5 rounded-full text-sm font-medium hover:bg-gray-50 hover:shadow-sm transition-all">
+          <button className="flex items-center gap-2 bg-surface border border-surface text-text-main px-4 py-2.5 rounded-full text-sm font-medium hover:bg-mainDash hover:shadow-sm transition-all">
             <iconify-icon icon="solar:printer-linear" class="text-lg"></iconify-icon>
             Export
           </button>
-          <button className="flex items-center gap-2 bg-[#111] text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-gray-800 hover:shadow-lg transition-all active:scale-95">
+          <button className="flex items-center gap-2 bg-brand-dark text-surface px-5 py-2.5 rounded-full text-sm font-medium hover:opacity-90 hover:shadow-lg transition-all active:scale-95">
             <iconify-icon icon="solar:pen-linear" class="text-lg"></iconify-icon>
             Edit Profile
           </button>
@@ -107,12 +107,12 @@ export default function EmployeeDetail() {
         
         {/* LEFT COLUMN: Sticky Profile Card */}
         <div className="w-full lg:w-[340px] flex-shrink-0 flex flex-col gap-6 lg:sticky lg:top-4">
-          <div className="bg-white rounded-[1.5rem] border border-gray-100 shadow-sm overflow-hidden flex flex-col">
+          <div className="bg-surface rounded-[1.5rem] border border-surface shadow-sm overflow-hidden flex flex-col">
             
             {/* Abstract Header Graphic */}
-            <div className="h-28 bg-gradient-to-r from-[#111] to-gray-800 relative">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#c5f82a]/20 rounded-full blur-xl -ml-5 -mb-5 pointer-events-none"></div>
+            <div className="h-28 bg-gradient-to-r from-brand-dark to-gray-800 relative">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-surface/5 rounded-full blur-2xl -mr-10 -mt-10 pointer-events-none"></div>
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-brand/20 rounded-full blur-xl -ml-5 -mb-5 pointer-events-none"></div>
             </div>
 
             {/* Profile Info */}
@@ -120,14 +120,14 @@ export default function EmployeeDetail() {
               <img 
                 src={emp.avatar} 
                 alt={emp.name} 
-                className="w-24 h-24 rounded-2xl object-cover mb-4 ring-4 ring-white shadow-md bg-white"
+                className="w-24 h-24 rounded-2xl object-cover mb-4 ring-4 ring-white shadow-md bg-surface"
               />
-              <h2 className="text-xl font-semibold tracking-tight text-gray-900">{emp.name}</h2>
-              <p className="text-sm text-gray-500 font-medium mb-3">{emp.role}</p>
+              <h2 className="text-xl font-semibold tracking-tight text-text-main">{emp.name}</h2>
+              <p className="text-sm text-text-muted font-medium mb-3">{emp.role}</p>
               
               <div className="flex gap-2 items-center mb-6">
                 <StatusBadge status={emp.status} />
-                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-text-muted border border-surface">
                   {emp.department}
                 </span>
               </div>
@@ -145,18 +145,18 @@ export default function EmployeeDetail() {
         </div>
 
         {/* RIGHT COLUMN: Tabs & Content */}
-        <div className="flex-1 w-full bg-white rounded-[1.5rem] border border-gray-100 shadow-sm flex flex-col overflow-hidden min-h-[600px]">
+        <div className="flex-1 w-full bg-surface rounded-[1.5rem] border border-surface shadow-sm flex flex-col overflow-hidden min-h-[600px]">
           
           {/* Custom Tabs */}
-          <div className="flex gap-1 px-6 pt-6 border-b border-gray-100 overflow-x-auto hide-scrollbar">
+          <div className="flex gap-1 px-6 pt-6 border-b border-surface overflow-x-auto hide-scrollbar">
             {['Overview', 'Attendance', 'Performance'].map(tab => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
                 className={`pb-4 px-5 text-sm font-medium border-b-2 transition-all whitespace-nowrap ${
                   activeTab === tab 
-                    ? 'border-[#c5f82a] text-gray-900' 
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200'
+                    ? 'border-brand text-text-main' 
+                    : 'border-transparent text-text-muted hover:text-text-main hover:border-surface'
                 }`}
               >
                 {tab}
@@ -169,31 +169,31 @@ export default function EmployeeDetail() {
             <div className="p-8 flex flex-col gap-8 animate-in fade-in duration-300">
               
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                  <p className="text-xs text-gray-500 mb-1">Employee ID</p>
-                  <p className="font-semibold text-gray-900">{emp.empId}</p>
+                <div className="bg-surface rounded-2xl p-4 border border-surface">
+                  <p className="text-xs text-text-muted mb-1">Employee ID</p>
+                  <p className="font-semibold text-text-main">{emp.empId}</p>
                 </div>
-                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                  <p className="text-xs text-gray-500 mb-1">Join Date</p>
-                  <p className="font-semibold text-gray-900">{emp.joinDate}</p>
+                <div className="bg-surface rounded-2xl p-4 border border-surface">
+                  <p className="text-xs text-text-muted mb-1">Join Date</p>
+                  <p className="font-semibold text-text-main">{emp.joinDate}</p>
                 </div>
-                <div className="bg-gray-50 rounded-2xl p-4 border border-gray-100">
-                  <p className="text-xs text-gray-500 mb-1">Reporting Manager</p>
-                  <p className="font-semibold text-gray-900">{emp.manager}</p>
+                <div className="bg-surface rounded-2xl p-4 border border-surface">
+                  <p className="text-xs text-text-muted mb-1">Reporting Manager</p>
+                  <p className="font-semibold text-text-main">{emp.manager}</p>
                 </div>
               </div>
 
               <div>
-                <h3 className="text-base font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                <h3 className="text-base font-semibold text-text-main mb-4">Recent Activity</h3>
                 <div className="flex flex-col gap-4">
                   {emp.activities.map((act) => (
                     <div key={act.id} className="flex items-start gap-4">
-                      <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 ${act.color}`}>
+                      <div className={`w-icon h-icon rounded-full flex items-center justify-center shrink-0 ${act.color}`}>
                         <iconify-icon icon={act.icon} class="text-xl"></iconify-icon>
                       </div>
-                      <div className="flex-1 border-b border-gray-50 pb-4">
-                        <p className="text-sm font-medium text-gray-900">{act.title}</p>
-                        <p className="text-xs text-gray-500 mt-0.5">{act.date}</p>
+                      <div className="flex-1 border-b border-surface pb-4">
+                        <p className="text-sm font-medium text-text-main">{act.title}</p>
+                        <p className="text-xs text-text-muted mt-0.5">{act.date}</p>
                       </div>
                     </div>
                   ))}
@@ -207,25 +207,25 @@ export default function EmployeeDetail() {
           {activeTab === 'Attendance' && (
             <div className="p-8 flex flex-col gap-6 animate-in fade-in duration-300">
               <div className="flex items-center justify-between">
-                <h3 className="text-base font-semibold text-gray-900">Attendance Log</h3>
+                <h3 className="text-base font-semibold text-text-main">Attendance Log</h3>
                 <button className="text-sm text-[#89b01d] font-medium hover:underline">View Calendar</button>
               </div>
               
-              <div className="border border-gray-100 rounded-2xl overflow-hidden">
+              <div className="border border-surface rounded-2xl overflow-hidden">
                 <table className="w-full text-left border-collapse whitespace-nowrap">
-                  <thead className="bg-gray-50/80 border-b border-gray-100">
+                  <thead className="bg-gray-50/80 border-b border-surface">
                     <tr>
-                      <th className="py-3 px-5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Date</th>
-                      <th className="py-3 px-5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                      <th className="py-3 px-5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Check In</th>
-                      <th className="py-3 px-5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Check Out</th>
-                      <th className="py-3 px-5 text-[11px] font-semibold text-gray-500 uppercase tracking-wider">Hours</th>
+                      <th className="py-3 px-5 text-[11px] font-semibold text-text-muted uppercase tracking-wider">Date</th>
+                      <th className="py-3 px-5 text-[11px] font-semibold text-text-muted uppercase tracking-wider">Status</th>
+                      <th className="py-3 px-5 text-[11px] font-semibold text-text-muted uppercase tracking-wider">Check In</th>
+                      <th className="py-3 px-5 text-[11px] font-semibold text-text-muted uppercase tracking-wider">Check Out</th>
+                      <th className="py-3 px-5 text-[11px] font-semibold text-text-muted uppercase tracking-wider">Hours</th>
                     </tr>
                   </thead>
                   <tbody>
                     {emp.attendance.map((record) => (
-                      <tr key={record.id} className="border-b border-gray-50 last:border-none hover:bg-[#fafafa]">
-                        <td className="py-3 px-5 text-sm text-gray-900 font-medium">{record.date}</td>
+                      <tr key={record.id} className="border-b border-surface last:border-none hover:bg-[#fafafa]">
+                        <td className="py-3 px-5 text-sm text-text-main font-medium">{record.date}</td>
                         <td className="py-3 px-5">
                           <span className={`inline-flex px-2 py-0.5 rounded text-[11px] font-medium ${
                             record.status === 'Present' ? 'bg-green-50 text-green-700' :
@@ -235,9 +235,9 @@ export default function EmployeeDetail() {
                             {record.status}
                           </span>
                         </td>
-                        <td className="py-3 px-5 text-sm text-gray-500">{record.checkIn}</td>
-                        <td className="py-3 px-5 text-sm text-gray-500">{record.checkOut}</td>
-                        <td className="py-3 px-5 text-sm text-gray-900 font-medium">{record.hours}</td>
+                        <td className="py-3 px-5 text-sm text-text-muted">{record.checkIn}</td>
+                        <td className="py-3 px-5 text-sm text-text-muted">{record.checkOut}</td>
+                        <td className="py-3 px-5 text-sm text-text-main font-medium">{record.hours}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -251,10 +251,10 @@ export default function EmployeeDetail() {
             <div className="p-8 flex flex-col gap-8 animate-in fade-in duration-300 h-full">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="text-base font-semibold text-gray-900">Performance Trend</h3>
-                  <p className="text-sm text-gray-500 mt-1">Monthly evaluation scores</p>
+                  <h3 className="text-base font-semibold text-text-main">Performance Trend</h3>
+                  <p className="text-sm text-text-muted mt-1">Monthly evaluation scores</p>
                 </div>
-                <div className="bg-[#c5f82a]/20 text-[#6a8717] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
+                <div className="bg-brand/20 text-[#6a8717] px-3 py-1 rounded-full text-xs font-semibold flex items-center gap-1">
                   <iconify-icon icon="solar:graph-up-linear"></iconify-icon>
                   92 Avg Score
                 </div>
