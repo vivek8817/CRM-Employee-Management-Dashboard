@@ -1,16 +1,59 @@
-# React + Vite
+# CRM Employee Management Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive Customer Relationship Management (CRM) and Employee Management Dashboard built with React, Vite, and Tailwind CSS.
 
-Currently, two official plugins are available:
+**🚀 Live Preview:** [https://crm-employee-management-five.vercel.app/](https://crm-employee-management-five.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
 
-## React Compiler
+- **Employee Management:** Efficiently manage employee data and records.
+- **Interactive Dashboards:** Data visualization using Recharts.
+- **State Management:** Robust and scalable state handling with Redux Toolkit.
+- **Modern UI/UX:** Clean, responsive, and beautiful user interface powered by Tailwind CSS.
+- **Client-Side Routing:** Seamless navigation using React Router DOM.
+- **Icons:** Comprehensive icon set via Iconify.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🛠️ Tech Stack
 
-## Expanding the ESLint configuration
+- **Framework:** [React 19](https://react.dev/) + [Vite](https://vitejs.dev/)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com/)
+- **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/)
+- **Routing:** [React Router DOM](https://reactrouter.com/)
+- **Charts:** [Recharts](https://recharts.org/)
+- **Icons:** [Iconify](https://iconify.design/)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Getting Started
+
+### Prerequisites
+
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/your-username/CRM-Employee-Management-Dashboard.git
+   cd CRM-Employee-Management-Dashboard
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server:**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open your browser:**
+   Navigate to `http://localhost:5173` to view the dashboard.
+
+## 📜 Available Scripts
+
+In the project directory, you can run:
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the app for production to the `dist` folder.
+- `npm run preview`: Locally preview the production build.
+- `npm run lint`: Runs ESLint to catch potential errors.
